@@ -1,0 +1,34 @@
+body {
+    font-family: sans-serif;
+}
+
+td,
+th {
+    padding: 3px;
+    height: 4.1em;
+    width: 5.5em;
+    text-align: center;
+}
+
+#menu {
+    background-color: lightgoldenrodyellow;
+    border-radius: 5px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 5px;
+    padding: 10px;
+    text-align: center;
+    width: 30%;
+}
+
+@media print {
+    #menu {
+        display: none;
+    }
+}
+
+table {
+    page-break-inside: avoid;
+    margin-bottom: 0.75em;
+}
