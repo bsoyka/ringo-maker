@@ -1,0 +1,7 @@
+{
+    "name": "ringo-maker",
+    "author": "Benjamin Soyka",
+    "main": "index.html",
+    "version": "1.0.0",
+    "private": true
+}
