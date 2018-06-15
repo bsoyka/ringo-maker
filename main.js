@@ -1,6 +1,11 @@
 function updateDisplay(numberOfCards) {
     document.getElementById("output").innerHTML = "";
     numberOfCards = parseInt(numberOfCards);
+    if (numberOfCards === 1) {
+        document.getElementById("cardS").style.display = "none";
+    } else {
+        document.getElementById("cardS").style.display = "inline";
+    }
     for (var b = 0; b < numberOfCards; b++) {
         var cardTableId = "ringoCard" + b;
         var cardTable = document.createElement("table");
@@ -11,70 +16,37 @@ function updateDisplay(numberOfCards) {
     }
 }
 
+var originalSpaces = [];
+
+function onBodyLoad() {
+    axios({
+        method: "get",
+        url: "https://api.airtable.com/v0/appg8uLn0QeZuqdPI/Words?view=Active%20words",
+        headers: {
+            "Authorization": "Bearer keyAgG52BdBvlu1p"
+        }
+    }).then(function (response) {
+        var airtableRecords = response.data.records;
+        for (var b = 0; b < airtableRecords.length; b++) {
+            originalSpaces.push(airtableRecords[b].fields.Word);
+        }
+        updateDisplay(1);
+        document.getElementById("loadingScreen").style.display = "none";
+    }).catch(function (error) {
+        document.getElementById("loadingScreen").style.display = "none";
+        document.getElementById("errorScreenNumber").innerHTML = error.response.status;
+        document.getElementById("errorScreenText").innerHTML = error.response.data.error.message;
+        document.getElementById("errorGitHubLink").href = "https://github.com/bsoyka/ringo-maker/issues/new?title=" + encodeURIComponent(error.response.status + " error") + "&body=" + encodeURIComponent("# Server response\n" + error.response.data.error.message) + "&labels=bug&assignee=bsoyka";
+        document.getElementById("errorScreen").style.display = "block";
+        document.title = error.response.status + ' Error';
+    });
+}
+
 function generateBingoCard(tableId) {
-    var spaces = [
-        "Red truck",
-        "Hawk",
-        "Washington license plate",
-        "Black cows",
-        "Mountains",
-        "Lake",
-        "River",
-        "Snow",
-        "Large sprinkler",
-        "Haystack",
-        "FedEx truck",
-        "Roadkill",
-        "Sagebrush",
-        "Fruit orchard",
-        "Yellow flower",
-        "Litter",
-        "American flag",
-        "Windsock",
-        "Cell tower",
-        "Solar panel",
-        "Windmill",
-        "Black and white cow",
-        "Horse",
-        "Love's truck",
-        "Police car",
-        "Sheriff's car",
-        "Highway patrol",
-        "Ambulance",
-        "Fire truck",
-        "Cattle guard",
-        "Porta-potty",
-        "Gravel pile",
-        "Orange cone",
-        "U-Haul truck",
-        "U-Haul trailer",
-        "Rock larger than player",
-        "Military vehicle",
-        "Airplane",
-        "Tire shreds",
-        "Sheep",
-        "Camper",
-        "Bus",
-        "Train",
-        "Car transporter",
-        "County line",
-        "State line",
-        "Bridge",
-        "Motorcycle",
-        "Rumble strip",
-        "Road construction",
-        "Barn",
-        "Mailbox",
-        "House",
-        "Tractor",
-        "Field crop",
-        "School",
-        "Athletic field",
-        "McDonalds",
-        "Church",
-        "Gas station",
-        "Silo"
-    ];
+    var spaces = [];
+    for (var h = 0; h < originalSpaces.length; h++) {
+        spaces[h] = (originalSpaces[h]);
+    }
     var result = document.getElementById(tableId);
     var resultArray = [];
     var firstRow = ["R", "I", "N", "G", "O"];
@@ -90,11 +62,15 @@ function generateBingoCard(tableId) {
         var newRow = document.createElement("tr");
         for (var x = 0; x < 5; x++) {
             var newCell = document.createElement("td");
-            var randomNumber = Math.floor(Math.random() * spaces.length);
-            var cellHtml = spaces[randomNumber];
+            if (i === 2 && x === 2) {
+                var cellHtml = "Road";
+            } else {
+                var randomNumber = Math.floor(Math.random() * spaces.length);
+                var cellHtml = spaces[randomNumber];
+                spaces.splice(randomNumber, 1);
+            }
             newCell.innerHTML = cellHtml;
             newRow.appendChild(newCell);
-            spaces.splice(randomNumber, 1);
         }
         result.appendChild(newRow);
     }

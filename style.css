@@ -32,3 +32,38 @@ table {
     page-break-inside: avoid;
     margin-bottom: 0.75em;
 }
+
+ul,
+ol {
+    text-align: justify;
+}
+
+#loadingScreen {
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+    background-color: palegoldenrod;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#loadingScreen h1 {
+    padding-top: 30vh;
+}
+
+#errorScreen {
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+    background-color: palevioletred;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+#errorScreenNumber {
+    font-size: 400%;
+    padding-top: 25vh;
+}

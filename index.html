@@ -5,18 +5,42 @@
     <meta charset="UTF-8">
     <title>Ringo Generator</title>
     <link rel="stylesheet" href="style.css">
-    <script src="main.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
-<body>
+<body onload="onBodyLoad();">
     <div id="menu">
-        <h2>Number of Cards</h2>
-        <input type="number" oninput="updateDisplay(this.value);" value="1">
+        <h2>Instructions</h2>
+        <ol>
+            <li>Use this page to generate <input type="number" oninput="updateDisplay(this.value);" value="1" maxlength="2"> official RINGO card<span id="cardS">s</span>.</li>
+            <li>Print the cards. They should be able to print two per page on a portrait-oriented letter paper. If they don't, please submit an issue below.</li>
+            <li>Get in the car, start driving, and play RINGO as a fun family game, and use whichever playing style you want, such as:
+                <ul>
+                    <li>Five in a row</li>
+                    <li>Four corners</li>
+                    <li>Blackout</li>
+                    <li>Any other way you want...</li>
+                </ul>
+            </li>
+        </ol>
+        <h2>Notes</h2>
+        <ul>
+            <li>At the center of every card, there is a free space marked as "Road".</li>
+        </ul>
+        <h2>Issues</h2>
+        <p>If you find an issue with this program, please <a href="https://github.com/bsoyka/ringo-maker/issues/new" target="_blank">submit an issue on GitHub</a>.</p>
     </div>
     <div id="output"></div>
-    <script>
-        updateDisplay(1);
-    </script>
+    <div id="loadingScreen">
+        <h1>Loading...</h1>
+    </div>
+    <div id="errorScreen">
+        <h1 id="errorScreenNumber"></h1>
+        <h1>An error has occurred while connecting to the database.<br>Here's what the server told us:</h1>
+        <h2 id="errorScreenText"></h2>
+        <h2>Please <a id="errorGitHubLink" target="_blank">submit an issue on GitHub</a>.</h2>
+    </div>
+    <script src="main.js"></script>
 </body>
 
 </html>
