@@ -23,7 +23,7 @@ function onBodyLoad() {
         method: "get",
         url: "https://api.airtable.com/v0/appg8uLn0QeZuqdPI/Words?view=Active%20words",
         headers: {
-            "Authorization": "Bearer keyAgG52BdBvlu1p"
+            "Authorization": "Bearer keyAgG52BdBvlu1p6"
         }
     }).then(function (response) {
         var airtableRecords = response.data.records;
